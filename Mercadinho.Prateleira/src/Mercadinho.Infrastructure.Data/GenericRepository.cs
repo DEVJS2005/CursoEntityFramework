@@ -1,4 +1,4 @@
-﻿using Mercadinho.Infrastructure.Data.Contract;
+﻿using Mercadinho.Prateleira.Infrastructure.Data.Contract;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Mercadinho.Infrastructure.Data
+namespace Mercadinho.Prateleira.Infrastructure.Data
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity>, IAsyncDisposable where TEntity : class
     {
@@ -27,17 +27,17 @@ namespace Mercadinho.Infrastructure.Data
             return entityEntry.Entity;
         }
 
-        public async Task<bool> CommitAsync(CancellationToken cancellationToken = default) =>
+        public async Task<bool> CommitAsync(CancellationToken cancellationToken = default) => 
             await _dbContext.SaveChangesAsync(cancellationToken).ConfigureAwait(false) > 0;
 
         public void Delete(TEntity entity) => _dbContext.Entry(entity).State = EntityState.Deleted;
 
-        public async ValueTask DisposeAsync() =>
+        public async ValueTask DisposeAsync() => 
             await _dbContext.DisposeAsync().ConfigureAwait(false);
 
-        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null,
-            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-            string includeProperties = "", bool noTracking = false, int? take = null,
+        public IQueryable<TEntity> GetAll(Expression<Func<TEntity, bool>> filter = null, 
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
+            string includeProperties = "", bool noTracking = false, int? take = null, 
             int? skip = null)
         {
             IQueryable<TEntity> query = this._dbSet;
@@ -71,16 +71,16 @@ namespace Mercadinho.Infrastructure.Data
             bool noTracking = false,
             int? take = null,
             int? skip = null,
-            CancellationToken cancellationToken = default) =>
+            CancellationToken cancellationToken = default) => 
                 await GetAll(filter, orderBy, includeProperties, noTracking, take, skip)
                     .ToListAsync(cancellationToken).ConfigureAwait(false);
 
         public async ValueTask<TEntity> GetByKeysAsync(
-            CancellationToken cancellationToken = default,
-            params object[] keys) =>
+            CancellationToken cancellationToken = default, 
+            params object[] keys) => 
                 await _dbSet.FindAsync(keys, cancellationToken).ConfigureAwait(false);
 
-        public void Update(TEntity entity) =>
+        public void Update(TEntity entity) => 
             _dbContext.Entry(entity).State = EntityState.Modified;
 
     }

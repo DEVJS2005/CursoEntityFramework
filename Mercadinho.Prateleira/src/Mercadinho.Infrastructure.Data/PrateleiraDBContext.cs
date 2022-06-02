@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Mercadinho.Prateleira.Domain;
+﻿using Mercadinho.Prateleira.Domain;
+using Microsoft.EntityFrameworkCore;
 
-namespace Mercadinho.Infrastructure.Data
+namespace Mercadinho.Prateleira.Infrastructure.Data
 {
     public class PrateleiraDbContext : DbContext
     {
